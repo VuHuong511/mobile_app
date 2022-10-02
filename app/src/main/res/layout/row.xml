@@ -36,13 +36,14 @@
                 android:id="@+id/textName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="16dp"
                 android:text="Name"
                 android:textColor="#000"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textId"
-                app:layout_constraintTop_toTopOf="@+id/textId" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textDestination"
@@ -60,29 +61,53 @@
                 android:id="@+id/textDate"
                 android:layout_width="92dp"
                 android:layout_height="20dp"
-                android:layout_marginEnd="80dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:text="Date"
                 android:textColor="#000"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textName"
-                app:layout_constraintTop_toTopOf="@+id/textName"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/textRisk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:layout_marginEnd="36dp"
-                android:text="Require Assessment"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="2dp"
+                android:text="Risks"
                 android:textColor="#000"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/textDate"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10dp"
+                android:text="date:"
+                app:layout_constraintEnd_toStartOf="@+id/textDate"
+                app:layout_constraintHorizontal_bias="0.895"
+                app:layout_constraintStart_toEndOf="@+id/textName"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="34dp"
+                android:layout_marginTop="24dp"
+                android:text="Requires risk assessment:"
+                app:layout_constraintStart_toEndOf="@+id/textDestination"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,6 +54,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.textDestination.setText(String.valueOf(expense_destination.get(position)));
         holder.textDate.setText(String.valueOf(expense_date.get(position)));
         holder.textRisk.setText(String.valueOf(expense_risk.get(position)));
+      /*  holder.textDescription.setText(String.valueOf(expense_destination.get(position)));*/
 
 
 
@@ -67,6 +68,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 intent.putExtra("destination", String.valueOf(expense_destination.get(position)));
                 intent.putExtra("date", String.valueOf(expense_date.get(position)));
                 intent.putExtra("risk", String.valueOf(expense_risk.get(position)));
+                intent.putExtra("destination", String.valueOf(expense_destination.get(position)));
 
                 context.startActivity(intent);
 

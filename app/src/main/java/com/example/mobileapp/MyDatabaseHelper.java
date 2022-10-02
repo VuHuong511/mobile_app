@@ -74,7 +74,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
        return cursor;
     }
 
-    public void updateData(String id, String name, String destination, String date, String risk) {
+    public void updateData(String id, String name, String destination, String date, String risk, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -82,6 +82,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(DESTINATION_COLUMN, destination);
         contentValues.put(DATE_COLUMN, date);
         contentValues.put(RISK_COLUMN, risk);
+        contentValues.put(DESCRIPTION_COLUMN, description);
 
         db.update(TABLE_NAME, contentValues, "_id=?", new String[]{id});
 
@@ -92,7 +93,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, "_id=?", new String[]{id});
 
+
     }
+    void deleteAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME);
+    }
+
 
 
 

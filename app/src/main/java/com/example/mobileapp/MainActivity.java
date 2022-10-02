@@ -13,6 +13,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,10 +38,22 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> id, expense_name, expense_destination, expense_date, expense_risk, expense_description;
     MyAdapter adapter;
 
+    TextView textDate;
+    EditText inputDate;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
+
+
+
 
         recyclerView = findViewById(R.id.recyclerView);
         add_button = findViewById(R.id.add_button);
@@ -70,6 +86,45 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.delete_all){
+            confirmDeleteAll();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    void confirmDeleteAll(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete All?");
+        builder.setMessage("Are you sure you want to delete all Data?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
+                myDB.deleteAllData();
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
+    }
+
     private void displayData() {
         Cursor cursor = myDB.getAllData();
         if (cursor.getCount() == 0) {
@@ -88,9 +143,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-        @NonNull
-        @Override
+
+    public abstract class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
         public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
             LocalDate localDate = LocalDate.now();
             int year = localDate.getYear();
@@ -99,14 +153,11 @@ public class MainActivity extends AppCompatActivity {
 
             return new DatePickerDialog(getActivity(), this, year, --month, day);
         }
-
-
-        @Override
-        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-            LocalDate date = LocalDate.of(year, ++month, day);
-            ((AddActivity) getActivity()).updateDate(date);
-
-
-        }
     }
+
+
+
+
+
+
 }
