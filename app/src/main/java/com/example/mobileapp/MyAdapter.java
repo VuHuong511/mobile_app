@@ -6,37 +6,45 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Context context;
-    private ArrayList id, expense_name, expense_destination, expense_date, expense_risk;
+    private ArrayList id, expense_name, expense_destination, expense_date, expense_risk, expense_description;
+    private ArrayList trip_id, Type, Amount, Time;
+
     private MyViewHolder holder;
+
+
+
+    void adapterDetail (Context context, ArrayList trip_id, ArrayList Type,
+                        ArrayList Amount, ArrayList Time){
+        this.context = context;
+        this.trip_id = trip_id;
+        this.Type = Type;
+        this.Amount = Amount;
+        this.Time = Time;
+    }
 
 
 
     public MyAdapter (Context context, ArrayList id, ArrayList expense_name,
                       ArrayList expense_destination, ArrayList expense_date,
-                      ArrayList expense_risk){
+                      ArrayList expense_risk, ArrayList expense_description){
         this.context = context;
         this.id = id;
         this.expense_name = expense_name;
         this.expense_destination = expense_destination;
         this.expense_date = expense_date;
         this.expense_risk = expense_risk;
-
-
-
-
-
+        this.expense_description = expense_description;
     }
+
     @NonNull
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,7 +62,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.textDestination.setText(String.valueOf(expense_destination.get(position)));
         holder.textDate.setText(String.valueOf(expense_date.get(position)));
         holder.textRisk.setText(String.valueOf(expense_risk.get(position)));
-      /*  holder.textDescription.setText(String.valueOf(expense_destination.get(position)));*/
+      //  holder.textDescription.setText(String.valueOf(expense_description.get(position)));
 
 
 
@@ -68,10 +76,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 intent.putExtra("destination", String.valueOf(expense_destination.get(position)));
                 intent.putExtra("date", String.valueOf(expense_date.get(position)));
                 intent.putExtra("risk", String.valueOf(expense_risk.get(position)));
-                intent.putExtra("destination", String.valueOf(expense_destination.get(position)));
-
+                intent.putExtra("description", String.valueOf(expense_description.get(position)));
                 context.startActivity(intent);
-
 
             }
         });
@@ -83,7 +89,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return id.size();
     }
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView textId, textName, textDestination, textDate, textRisk, textDescription;
 
@@ -94,6 +99,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             textDestination = itemView.findViewById(R.id.textDestination);
             textDate = itemView.findViewById(R.id.textDate);
             textRisk = itemView.findViewById(R.id.textRisk);
+            //textDescription = itemView.findViewById(R.id.textDescription);
 
 
 

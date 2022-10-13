@@ -21,6 +21,7 @@ public class AddActivity extends AppCompatActivity {
     Button Add_button;
     RadioButton radioSelect, radioButton, radioButton2;
     RadioGroup radioGroup;
+
     Calendar calendar = Calendar.getInstance();
     int year = calendar.get(Calendar.YEAR);
     int month = calendar.get(Calendar.MONTH);
@@ -37,7 +38,6 @@ public class AddActivity extends AppCompatActivity {
         inputDate = findViewById(R.id.inputDate);
         inputDate.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View view) {
                 DatePickerDialog dialog = new DatePickerDialog(AddActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -53,7 +53,6 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioButton = (RadioButton) findViewById(R.id.radioButton) ;
         radioButton2 = (RadioButton) findViewById(R.id.radioButton2) ;
@@ -64,7 +63,6 @@ public class AddActivity extends AppCompatActivity {
         Add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(alertError()){
 
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     radioSelect = (RadioButton) findViewById(selectedId);
@@ -84,15 +82,10 @@ public class AddActivity extends AppCompatActivity {
                     Intent i = new Intent(AddActivity.this, MainActivity.class);
                     startActivity(i);
 
-                }
             }
 
         });
-
-
     }
-
-
 
 
     private void Input(){
@@ -112,7 +105,8 @@ public class AddActivity extends AppCompatActivity {
         alertAdd(name, destination, date, risk, description);
     }
 
-    private void alertAdd(String inputName , String inputDestination, String inputDate, String radioSelect, String inputDescription){
+    private void alertAdd(String inputName , String inputDestination,
+                          String inputDate, String radioSelect, String inputDescription){
         new AlertDialog.Builder(this).setTitle("Details expense").setMessage("Details expense: " +
                 "\n" + inputName +
                 "\n" + inputDestination +
@@ -125,6 +119,7 @@ public class AddActivity extends AppCompatActivity {
 
             }
         }).show();
+
     }
 
     private boolean alertError(){
@@ -138,10 +133,4 @@ public class AddActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
-
-
-
-
 }

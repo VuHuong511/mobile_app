@@ -34,26 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     FloatingActionButton add_button;
-    MyDatabaseHelper myDB;
+    MyDatabaseHelper db;
     ArrayList<String> id, expense_name, expense_destination, expense_date, expense_risk, expense_description;
     MyAdapter adapter;
-
-    TextView textDate;
-    EditText inputDate;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
-
-
-
-
 
         recyclerView = findViewById(R.id.recyclerView);
         add_button = findViewById(R.id.add_button);
@@ -64,26 +52,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        myDB = new MyDatabaseHelper(this);
+        db = new MyDatabaseHelper(this);
         id = new ArrayList<>();
         expense_name = new ArrayList<>();
         expense_destination = new ArrayList<>();
         expense_date = new ArrayList<>();
         expense_risk = new ArrayList<>();
+        expense_description = new ArrayList<>();
 
 
         recyclerView = findViewById(R.id.recyclerView);
+        displayData();
         adapter = new MyAdapter(this,
                 id,
                 expense_name,
                 expense_destination,
                 expense_date,
-                expense_risk);
+                expense_risk,
+                expense_description);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        displayData();
-
-
     }
 
     @Override
@@ -126,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayData() {
-        Cursor cursor = myDB.getAllData();
+        Cursor cursor = db.getAllData();
         if (cursor.getCount() == 0) {
             Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
         } else {
@@ -136,8 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 expense_destination.add(cursor.getString(2));
                 expense_date.add(cursor.getString(3));
                 expense_risk.add(cursor.getString(4));
-
-
+                expense_description.add(cursor.getString(5));
             }
 
         }
@@ -154,10 +141,5 @@ public class MainActivity extends AppCompatActivity {
             return new DatePickerDialog(getActivity(), this, year, --month, day);
         }
     }
-
-
-
-
-
 
 }

@@ -5,18 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-    private Context context;
+
     private SQLiteDatabase database;
     private static final String DATABASE_NAME = "Expense.db";
-    private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_NAME = "expense_management";
-    private static final String ID_COLUMN = "id";
+    private static final String TABLE_NAME_TRIP = "trip";
     private static final String NAME_COLUMN = "expense_name";
     private static final String DESTINATION_COLUMN = "expense_destination";
     private static final String DATE_COLUMN = "expense_date";
@@ -29,8 +26,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         this.database = getWritableDatabase();
     }
 
-    private static String CREATE_TABLE = String.format(
-            "CREATE TABLE expense_management (" +
+    private static String CREATE_TABLE_TRIP = String.format(
+            "CREATE TABLE trip (" +
                     "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "expense_name TEXT, " +
                     "expense_destination TEXT, " +
@@ -40,64 +37,99 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     ");"
     );
 
+    private static String CREATE_TABLE_EXPENSE = String.format(
+            "CREATE TABLE expense (" +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "trip_id TEXT, " +
+                    "Type TEXT, " +
+                    "Amount TEXT, " +
+                    "Time TEXT, " +
+                    "FOREIGN KEY (trip_id) REFERENCES trip(_id)" +
+                    ");"
+    );
+
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_TABLE_TRIP);
+        db.execSQL(CREATE_TABLE_EXPENSE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_TRIP);
+        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_EXPENSE);
         onCreate(db);
     }
 
 
 
     public long AddExpense(String name, String destination, String date,String risk, String description) {
-        ContentValues contentValues = new ContentValues();
+        ContentValues cv = new ContentValues();
 
-        contentValues.put(NAME_COLUMN, name);
-        contentValues.put(DESTINATION_COLUMN, destination);
-        contentValues.put(DATE_COLUMN, date);
-        contentValues.put(RISK_COLUMN, risk);
-        contentValues.put(DESCRIPTION_COLUMN, description);
+        cv.put(NAME_COLUMN, name);
+        cv.put(DESTINATION_COLUMN, destination);
+        cv.put(DATE_COLUMN, date);
+        cv.put(RISK_COLUMN, risk);
+        cv.put(DESCRIPTION_COLUMN, description);
 
-
-        long result = database.insert(TABLE_NAME, null, contentValues);
+        long result = database.insert(TABLE_NAME_TRIP, null, cv);
         return result;
 
     }
 
+    public long AddDetail(String type, String amount, String time){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("Type", type);
+        cv.put("Amount", amount);
+        cv.put("Time", time);
+
+        long result = database.insert(CREATE_TABLE_EXPENSE, null, cv);
+        return result;
+    };
+
+
+    Cursor getAllDetail(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("Select * from expense", null);
+        return cursor;
+    }
+
+
+
+
     Cursor getAllData(){
        SQLiteDatabase db = this.getWritableDatabase();
-       Cursor cursor = db.rawQuery("Select * from expense_management", null);
+       Cursor cursor = db.rawQuery("Select * from trip", null);
        return cursor;
     }
 
     public void updateData(String id, String name, String destination, String date, String risk, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
+        ContentValues cv = new ContentValues();
 
-        contentValues.put(NAME_COLUMN, name);
-        contentValues.put(DESTINATION_COLUMN, destination);
-        contentValues.put(DATE_COLUMN, date);
-        contentValues.put(RISK_COLUMN, risk);
-        contentValues.put(DESCRIPTION_COLUMN, description);
+        cv.put(NAME_COLUMN, name);
+        cv.put(DESTINATION_COLUMN, destination);
+        cv.put(DATE_COLUMN, date);
+        cv.put(RISK_COLUMN, risk);
+        cv.put(DESCRIPTION_COLUMN, description);
 
-        db.update(TABLE_NAME, contentValues, "_id=?", new String[]{id});
+        db.update(TABLE_NAME_TRIP, cv, "_id=?", new String[]{id});
 
 
 
     }
     public void deleteRow(String id){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, "_id=?", new String[]{id});
+        db.delete(TABLE_NAME_TRIP, "_id=?", new String[]{id});
 
 
     }
     void deleteAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_NAME);
+        db.execSQL("DELETE FROM " + TABLE_NAME_TRIP);
     }
 
 

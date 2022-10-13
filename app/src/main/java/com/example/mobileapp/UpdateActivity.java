@@ -3,31 +3,24 @@ package com.example.mobileapp;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 
 public class UpdateActivity extends AppCompatActivity {
 
     EditText inputName, inputDestination, inputDate, editrisk, inputDescription;
-    Button Update_button, Delete_button;
-    RadioGroup radioGroup;
+    Button Update_button, Delete_button, all_expense_button;
+
     MyDatabaseHelper myDB;
     String id, name, destination, date, risk, description;
 
@@ -69,6 +62,7 @@ public class UpdateActivity extends AppCompatActivity {
 
         Update_button = findViewById(R.id.Update_button);
         Delete_button = findViewById(R.id.Delete_button);
+        all_expense_button = findViewById(R.id.all_expense_button);
 
 
         myDB = new MyDatabaseHelper(UpdateActivity.this);
@@ -105,7 +99,7 @@ public class UpdateActivity extends AppCompatActivity {
 
                 Intent i = new Intent(UpdateActivity.this, MainActivity.class);
                 startActivity(i);
-
+                finish();
 
             }
         });
@@ -115,8 +109,16 @@ public class UpdateActivity extends AppCompatActivity {
                 confirmDelete();
             }
         });
-
+        all_expense_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UpdateActivity.this, DetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     void confirmDelete(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
