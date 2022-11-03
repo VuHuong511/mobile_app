@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/inputDestination"
         tools:ignore="MissingConstraints" />
 
-    <EditText
+    <TextView
         android:id="@+id/inputDate"
         android:layout_width="310dp"
         android:layout_height="41dp"
@@ -81,7 +81,8 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-
+        android:textSize="16dp"
+        android:textStyle="bold"
         android:text="Click to select the date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textDate"
@@ -117,6 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="60dp"
+            android:textSize="16dp"
             android:text="Yes" />
 
         <RadioButton
@@ -124,6 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="60dp"
+            android:textSize="16dp"
             android:text="No" />
     </RadioGroup>
 

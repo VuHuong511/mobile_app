@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/inputDestination"
         tools:ignore="MissingConstraints" />
 
-    <EditText
+    <TextView
         android:id="@+id/inputDate"
         android:layout_width="310dp"
         android:layout_height="41dp"
@@ -133,14 +133,14 @@
         android:id="@+id/textDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
         android:text="Description"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editrisk"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup1"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -161,7 +161,7 @@
         android:layout_width="123dp"
         android:layout_height="58dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:text="Update"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -175,7 +175,7 @@
         android:id="@+id/Delete_button"
         android:layout_width="117dp"
         android:layout_height="57dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="4dp"
         android:text="Delete"
         android:textAllCaps="false"
@@ -185,26 +185,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputDescription" />
 
-    <EditText
-        android:id="@+id/editrisk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="350dp"
+        android:layout_height="54dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.139"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textRisk"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintTop_toBottomOf="@+id/textRisk">
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="117dp"
+            android:layout_height="match_parent"
+            android:text="Yes" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="234dp"
+            android:layout_height="54dp"
+            android:text="No" />
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/all_expense_button"
-        android:layout_width="137dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="102dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
         android:text="All expense"
         android:textSize="20dp"
 

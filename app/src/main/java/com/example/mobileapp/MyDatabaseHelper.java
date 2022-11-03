@@ -14,6 +14,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase database;
     private static final String DATABASE_NAME = "Expense.db";
     private static final String TABLE_NAME_TRIP = "trip";
+    private static final String TABLE_NAME_EXPENSE = "expense";
     private static final String NAME_COLUMN = "expense_name";
     private static final String DESTINATION_COLUMN = "expense_destination";
     private static final String DATE_COLUMN = "expense_date";
@@ -40,10 +41,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static String CREATE_TABLE_EXPENSE = String.format(
             "CREATE TABLE expense (" +
                     "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "trip_id TEXT, " +
                     "Type TEXT, " +
                     "Amount TEXT, " +
                     "Time TEXT, " +
+                    "trip_id INTEGER, " +
                     "FOREIGN KEY (trip_id) REFERENCES trip(_id)" +
                     ");"
     );
@@ -79,21 +80,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public long AddDetail(String type, String amount, String time){
-        SQLiteDatabase db = this.getWritableDatabase();
+    public long AddDetail( String type, String amount, String time, String tripID){
         ContentValues cv = new ContentValues();
+
+
         cv.put("Type", type);
         cv.put("Amount", amount);
         cv.put("Time", time);
+        cv.put("trip_id", tripID);
 
-        long result = database.insert(CREATE_TABLE_EXPENSE, null, cv);
-        return result;
+
+        long result1 = database.insert(TABLE_NAME_EXPENSE, null, cv);
+        return result1;
     };
 
 
-    Cursor getAllDetail(){
+    Cursor getAllDetail(String tripId){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("Select * from expense", null);
+        String selectQuery = "SELECT * FROM " + TABLE_NAME_EXPENSE + " WHERE trip_id" + " = " + tripId;
+        Cursor cursor = db.rawQuery(selectQuery, null);
         return cursor;
     }
 
@@ -132,8 +137,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_NAME_TRIP);
     }
 
-
-
+    public void deleteDetail(String idEx){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(CREATE_TABLE_EXPENSE, "_id=?", new String[]{idEx});
+    }
 
 }
 

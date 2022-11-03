@@ -12,14 +12,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText inputName, inputDestination, inputDate, editrisk, inputDescription;
+    EditText inputName, inputDestination, inputDescription;
+    TextView inputDate;
     Button Update_button, Delete_button, all_expense_button;
+    RadioGroup radioGroup;
+    RadioButton radioSelect;
 
     MyDatabaseHelper myDB;
     String id, name, destination, date, risk, description;
@@ -56,10 +62,8 @@ public class UpdateActivity extends AppCompatActivity {
             }
         });
 
-        editrisk = (EditText)findViewById(R.id.editrisk);
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup1);
         inputDescription = (EditText)findViewById(R.id.inputDescription);
-
-
         Update_button = findViewById(R.id.Update_button);
         Delete_button = findViewById(R.id.Delete_button);
         all_expense_button = findViewById(R.id.all_expense_button);
@@ -72,15 +76,20 @@ public class UpdateActivity extends AppCompatActivity {
         destination = getIntent().getStringExtra("destination");
         date = getIntent().getStringExtra("date");
         risk = getIntent().getStringExtra("risk");
+        if(risk.equals("Yes")){
+            RadioButton yes = findViewById(R.id.radioButton);
+            yes.setChecked(true);
+        } else {
+            RadioButton no = findViewById(R.id.radioButton2);
+            no.setChecked(true);
+        }
         description = getIntent().getStringExtra("description");
 
 
         inputName.setText(name);
         inputDestination.setText(destination);
         inputDate.setText(date);
-        editrisk.setText(risk);
         inputDescription.setText(description);
-
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
@@ -90,10 +99,13 @@ public class UpdateActivity extends AppCompatActivity {
         Update_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int SelectID = radioGroup.getCheckedRadioButtonId();
+                radioSelect = findViewById(SelectID);
+                String radio = radioSelect.getText().toString();
                 myDB.updateData(id, inputName.getText().toString(),
                         inputDestination.getText().toString(),
                         inputDate.getText().toString(),
-                        editrisk.getText().toString(),
+                        risk = radio,
                         inputDescription.getText().toString());
                 Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
 
@@ -113,6 +125,7 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UpdateActivity.this, DetailActivity.class);
+                intent.putExtra("tripId", id);
                 startActivity(intent);
             }
         });
@@ -129,7 +142,8 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
                 myDB.deleteRow(id);
-                finish();
+                Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

@@ -16,22 +16,8 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Context context;
     private ArrayList id, expense_name, expense_destination, expense_date, expense_risk, expense_description;
-    private ArrayList trip_id, Type, Amount, Time;
 
-    private MyViewHolder holder;
-
-
-
-    void adapterDetail (Context context, ArrayList trip_id, ArrayList Type,
-                        ArrayList Amount, ArrayList Time){
-        this.context = context;
-        this.trip_id = trip_id;
-        this.Type = Type;
-        this.Amount = Amount;
-        this.Time = Time;
-    }
-
-
+//    private MyViewHolder holder;
 
     public MyAdapter (Context context, ArrayList id, ArrayList expense_name,
                       ArrayList expense_destination, ArrayList expense_date,
@@ -55,14 +41,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-
-
         holder.textId.setText(String.valueOf(id.get(position)));
         holder.textName.setText(String.valueOf(expense_name.get(position)));
         holder.textDestination.setText(String.valueOf(expense_destination.get(position)));
         holder.textDate.setText(String.valueOf(expense_date.get(position)));
         holder.textRisk.setText(String.valueOf(expense_risk.get(position)));
-      //  holder.textDescription.setText(String.valueOf(expense_description.get(position)));
 
 
 
@@ -78,9 +61,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 intent.putExtra("risk", String.valueOf(expense_risk.get(position)));
                 intent.putExtra("description", String.valueOf(expense_description.get(position)));
                 context.startActivity(intent);
-
             }
         });
+
 
     }
 
@@ -89,8 +72,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return id.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView textId, textName, textDestination, textDate, textRisk, textDescription;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView textId, textName, textDestination, textDate, textRisk;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -99,11 +82,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             textDestination = itemView.findViewById(R.id.textDestination);
             textDate = itemView.findViewById(R.id.textDate);
             textRisk = itemView.findViewById(R.id.textRisk);
-            //textDescription = itemView.findViewById(R.id.textDescription);
-
-
-
-
         }
     }
 }

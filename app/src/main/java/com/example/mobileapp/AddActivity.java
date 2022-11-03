@@ -12,12 +12,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
 
 public class AddActivity extends AppCompatActivity {
 
-    EditText inputName, inputDestination, inputDate, inputDescription;
+    EditText inputName, inputDestination, inputDescription;
+    TextView inputDate;
     Button Add_button;
     RadioButton radioSelect, radioButton, radioButton2;
     RadioGroup radioGroup;
@@ -56,14 +58,13 @@ public class AddActivity extends AppCompatActivity {
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioButton = (RadioButton) findViewById(R.id.radioButton) ;
         radioButton2 = (RadioButton) findViewById(R.id.radioButton2) ;
-
         inputDescription = findViewById(R.id.inputDescription);
 
         Add_button = findViewById(R.id.Add_button);
         Add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (alertError()) {
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     radioSelect = (RadioButton) findViewById(selectedId);
                     MyDatabaseHelper db = new MyDatabaseHelper(AddActivity.this);
@@ -74,14 +75,16 @@ public class AddActivity extends AppCompatActivity {
                             inputDescription.getText().toString()
                     );
                     Input();
+
                     if (resultAddDb == -1) {
                         Toast.makeText(getApplicationContext(), "FAILED", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "ADDED", Toast.LENGTH_LONG).show();
                     }
-                    Intent i = new Intent(AddActivity.this, MainActivity.class);
-                    startActivity(i);
+                    /*Intent i = new Intent(AddActivity.this, MainActivity.class);
+                    startActivity(i);*/
 
+                }
             }
 
         });
@@ -107,18 +110,23 @@ public class AddActivity extends AppCompatActivity {
 
     private void alertAdd(String inputName , String inputDestination,
                           String inputDate, String radioSelect, String inputDescription){
-        new AlertDialog.Builder(this).setTitle("Details expense").setMessage("Details expense: " +
-                "\n" + inputName +
-                "\n" + inputDestination +
-                "\n" + inputDate +
-                "\n" + radioSelect +
-                "\n" + inputDescription
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Details expense")
+                .setMessage("Details expense: "  +
+                "\n Name: " + inputName +
+                "\n Destination: " + inputDestination +
+                "\n Date: " + inputDate +
+                "\n Requires risks assessment: " + radioSelect +
+                "\n Description: " + inputDescription
         ).setNeutralButton("Back", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                Intent intent = new Intent(AddActivity.this, MainActivity.class);
+                startActivity(intent);
             }
-        }).show();
+        });
+
+        builder.create().show();
 
     }
 
@@ -126,9 +134,8 @@ public class AddActivity extends AppCompatActivity {
         if(inputName.getText().toString().isEmpty() |
                 inputDestination.getText().toString().isEmpty() |
                 inputDate.getText().toString().isEmpty() |
-                !radioButton.isChecked() && (!radioButton2.isChecked()) |
-                inputDescription.getText().toString().isEmpty()){
-            Toast.makeText(AddActivity.this, "You need to fill all required fields", Toast.LENGTH_SHORT).show();
+                !radioButton.isChecked() && (!radioButton2.isChecked())){
+            Toast.makeText(AddActivity.this, "You need to fill all fields", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
