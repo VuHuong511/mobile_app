@@ -1,5 +1,7 @@
 package com.example.mobileapp;
 
+import static android.graphics.BlurMaskFilter.Blur.INNER;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -127,19 +129,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     }
     public void deleteRow(String id){
+        deleteExpenseByTripId(id);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME_TRIP, "_id=?", new String[]{id});
+        db.delete(TABLE_NAME_TRIP, "_id=?"
+                , new String[]{id});
+    }
 
-
+    public void deleteExpenseByTripId(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME_EXPENSE, "trip_id=?"
+                , new String[]{id});
     }
     void deleteAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME_TRIP);
-    }
-
-    public void deleteDetail(String idEx){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(CREATE_TABLE_EXPENSE, "_id=?", new String[]{idEx});
     }
 
 }

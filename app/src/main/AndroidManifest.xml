@@ -15,10 +15,14 @@
         tools:targetApi="31">
         <activity
             android:name=".DetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Detail Expenses"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".AddDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Add Expense"
+            android:parentActivityName=".DetailActivity"/>
         <activity
             android:name=".UpdateActivity"
             android:exported="false"

@@ -81,9 +81,6 @@ public class AddActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(getApplicationContext(), "ADDED", Toast.LENGTH_LONG).show();
                     }
-                    /*Intent i = new Intent(AddActivity.this, MainActivity.class);
-                    startActivity(i);*/
-
                 }
             }
 
@@ -111,8 +108,8 @@ public class AddActivity extends AppCompatActivity {
     private void alertAdd(String inputName , String inputDestination,
                           String inputDate, String radioSelect, String inputDescription){
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle("Details expense")
-                .setMessage("Details expense: "  +
+                .setTitle("Details Trip")
+                .setMessage("Details Trip"  +
                 "\n Name: " + inputName +
                 "\n Destination: " + inputDestination +
                 "\n Date: " + inputDate +

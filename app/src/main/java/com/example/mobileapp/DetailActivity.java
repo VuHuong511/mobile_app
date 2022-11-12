@@ -1,5 +1,6 @@
 package com.example.mobileapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,8 +33,6 @@ public class DetailActivity extends AppCompatActivity {
 
         recyclerView1 = findViewById(R.id.recyclerView1);
         actionButton = findViewById(R.id.actionButton);
-//        String idEx = getIntent().getStringExtra("idEx");
-//        String idTrip = getIntent().getStringExtra("trip_id");
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,17 +42,6 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        delete_detail = findViewById(R.id.delete_detail);
-        delete_detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-
-
 
 
 
@@ -75,9 +63,11 @@ public class DetailActivity extends AppCompatActivity {
                 trip_id);
         recyclerView1.setAdapter(adapterDetail);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
+        
 
 
     }
+
 
     private void displayDetail() {
         String idTrip = getIntent().getStringExtra("tripId");
@@ -94,25 +84,5 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
     }
-    void alertDelete(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete " + Type + " ?");
-        builder.setMessage("Are you sure you want to delete " + Type + " ?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                MyDatabaseHelper myDB = new MyDatabaseHelper(DetailActivity.this);
-                myDB.deleteDetail(idEx);
-                Intent intent = new Intent(DetailActivity.this,DetailActivity.class);
-                startActivity(intent);
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        });
-        builder.create().show();
-    }
 }

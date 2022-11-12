@@ -17,8 +17,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Context context;
     private ArrayList id, expense_name, expense_destination, expense_date, expense_risk, expense_description;
 
-//    private MyViewHolder holder;
-
     public MyAdapter (Context context, ArrayList id, ArrayList expense_name,
                       ArrayList expense_destination, ArrayList expense_date,
                       ArrayList expense_risk, ArrayList expense_description){
@@ -30,14 +28,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.expense_risk = expense_risk;
         this.expense_description = expense_description;
     }
-
     @NonNull
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.row, parent,false);
         return new MyViewHolder(v);
     }
-
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
@@ -46,10 +42,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.textDestination.setText(String.valueOf(expense_destination.get(position)));
         holder.textDate.setText(String.valueOf(expense_date.get(position)));
         holder.textRisk.setText(String.valueOf(expense_risk.get(position)));
-
-
-
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,10 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 context.startActivity(intent);
             }
         });
-
-
     }
-
     @Override
     public int getItemCount() {
         return id.size();

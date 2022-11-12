@@ -25,10 +25,9 @@ import java.util.Calendar;
 public class AddDetailActivity extends AppCompatActivity {
 
 
-    EditText inputAmount, inputTime, inputTripId;
-    TextView tripId;
+    EditText inputAmount;
+    TextView inputTime;
     Button Add_button1;
-    Intent intent;
 
 
 
@@ -36,7 +35,8 @@ public class AddDetailActivity extends AppCompatActivity {
             "Food",
             "Entertainment",
             "Drink",
-            "Travel"
+            "Travel",
+            "Other"
     };
     private Spinner spinnerType;
 
@@ -112,6 +112,8 @@ public class AddDetailActivity extends AppCompatActivity {
                     i.putExtra("tripId", tripId);
                     startActivity(i);
 
+
+
                 }
             }
         });
@@ -144,8 +146,8 @@ public class AddDetailActivity extends AppCompatActivity {
                 ).setNeutralButton("Back", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(AddDetailActivity.this, DetailActivity.class);
-                        startActivity(intent);
+
+
                     }
                 });
 
