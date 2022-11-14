@@ -90,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+
+
     void confirmDeleteAll(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete All?");
@@ -112,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
+
+
 
     private void displayData() {
         Cursor cursor = db.getAllData();
